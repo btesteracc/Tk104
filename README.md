@@ -1,4 +1,4 @@
-# Tk104
+# Tk104 Plugin for owntracks
 A Plugin for Owntracks for the Tk104 tracker
 This is the first version of a plugin for the owntracks system to integrate data from the Tk104 GPS-tracker.
 It makes use of the gammu-smsd project to receive sms from the tk104 device, converts the data into a json 
