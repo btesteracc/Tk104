@@ -27,7 +27,7 @@ data={
     "vel"   : 0,
     "p"     : 0
 }
-
+dateline=0
 InFilename="/var/spool/gammu/inbox/"+sys.argv[1]
 with open(InFilename,'r') as InFile:
     content=InFile.readlines()
@@ -65,9 +65,10 @@ elif content[0].startswith("Lac"):
     data["desc"]=content[0]+content[4]
     #checked i.O.
 
-format="T:%y/%m/%d %H:%M\n"
-date_obj=datetime.datetime.strptime(content[dateline],format)
-data['tst'] = date_obj.strftime('%s')
+if dateline!=0:
+    format="T:%y/%m/%d %H:%M\n"
+    date_obj=datetime.datetime.strptime(content[dateline],format)
+    data['tst'] = date_obj.strftime('%s')
 if (data['tst']!=0) and (data['lat']!=0.0) and (data['lon']!=0.0):
     datastr=json.dumps(data)
     #Zum Testen auskommentiert am 01.11.2016
