@@ -34,12 +34,12 @@ with open(InFilename,'r') as InFile:
 InFile.close()
 Devicename=sys.argv[1].split("_")[3]
 conf.topic+=Devicename[1:]
-if content[0].startswith("Last"):
+if content[0].startswith("Last") and content[1].startswith("lat"):
     data["lat"]=float(content[1][4:])
     data["lon"]=float(content[2][4:])
     data["batt"]=int(content[-1][4:-2])
     data["desc"]=content[6]+content[3]
-    dateline=-2
+    dateline=7
     #checked i.O.
 
 elif (content[0].startswith("lat")) and (content[0].find("lon")!=-1):
@@ -67,8 +67,12 @@ elif content[0].startswith("Lac"):
 
 if dateline!=0:
     format="T:%y/%m/%d %H:%M\n"
-    date_obj=datetime.datetime.strptime(content[dateline],format)
+    try:
+        date_obj=datetime.datetime.strptime(content[dateline],format)
+    except ValueError:
+        date_obj=datetime.datetime.now()
     data['tst'] = date_obj.strftime('%s')
+
 if (data['tst']!=0) and (data['lat']!=0.0) and (data['lon']!=0.0):
     datastr=json.dumps(data)
     #Zum Testen auskommentiert am 01.11.2016
@@ -80,4 +84,5 @@ if (data['tst']!=0) and (data['lat']!=0.0) and (data['lon']!=0.0):
     #with open("/tmp/receive.txt",'a') as OutFile:
     with open("/var/spool/gammu/"+Devicename[1:],'a') as OutFile:
         OutFile.write(datastr+'\n')
+    OutFile.close()
     OutFile.close()
