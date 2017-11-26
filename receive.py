@@ -8,6 +8,7 @@ import paho.mqtt.client as mqtt
 import re
 import logging
 import ssl
+from python_utils import converters
 
 import receiver_config as conf
 
@@ -49,9 +50,9 @@ def check_case_and_format_to_json(content):
         "tst": 0
     }
     if content[0].startswith("Last") and content[1].startswith("lat"):
-        data["lat"]=float(content[1][4:])
-        data["lon"]=float(content[2][4:])
-        data["batt"]=int(content[-1][4:-2])
+        data["lat"] = converters.to_float(content[1], regexp=True)
+        data["lon"] = converters.to_float(content[2], regexp=True)
+        data["batt"] = converters.to_int(content[-1], regexp=True)
         data["desc"]=content[6]+content[3]
         data["tst"]=get_date_from_line(7)
         #checked i.O.
@@ -60,14 +61,14 @@ def check_case_and_format_to_json(content):
         grids=re.findall("([-+]?\d{1,2}[.]\d+)",content[0])
         data["lat"]=float(grids[0])
         data["lon"]=float(grids[1])
-        data["batt"]=int(content[3][4:-3])
+        data["batt"] = converters.to_int(content[3], regexp=True)
         data["tst"] = get_date_from_line(2)
         #checked i.O.
 
     elif content[0].startswith("lat") and content[1].startswith("long"):
-        data["lat"]=float(content[0][4:])
-        data["lon"]=float(content[1][5:])
-        data["batt"]=int(content[4][4:-2])
+        data["lat"] = converters.to_float(content[0], regexp=True)
+        data["lon"]= converters.to_float(content[1],regexp=True)
+        data["batt"] = converters.to_int(content[4],regexp=True)
         data["tst"] = get_date_from_line(3)
         #checked i.O.
 
