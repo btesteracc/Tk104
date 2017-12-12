@@ -1,4 +1,4 @@
-userid ={'username':"bjoern",'password':"30212"}
+userid ={'username':"user",'password':"12345"}
 topic="owntracks/GSM/"
-hostname="mosquitto.bwithafocus.net"
+hostname="Testserver"
 port=8883
