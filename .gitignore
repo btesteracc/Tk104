@@ -218,3 +218,4 @@ pip-log.txt
 .mr.developer.cfg
 
 receiver_config.py
+.gitignore
