@@ -3,6 +3,7 @@
 #################
 .remote-sync.json
 
+
 *.pydevproject
 .project
 .metadata
@@ -215,3 +216,5 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+receiver_config.py
